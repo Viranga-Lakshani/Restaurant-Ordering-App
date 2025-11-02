@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Orders</h2>
+<form method="post" action="{{ url_for('add_order') }}">
+    <input type="number" name="table_no" placeholder="Table No" required>
+    <input type="text" name="details" placeholder="Order details" required>
+    <button type="submit">Add Order</button>
+</form>
+<table>
+    <tr>
+        <th>Order ID</th>
+        <th>Table No</th>
+        <th>Details</th>
+        <th>Status</th>
+        <th>Update Status</th>
+        <th>Action</th>
+    </tr>
+    {% for o in orders %}
+    <tr>
+        <td>{{ o['id'] }}</td>
+        <td>{{ o['table_no'] }}</td>
+        <td>{{ o['details'] }}</td>
+        <td>{{ o['status'] }}</td>
+        <td>
+            <form method="post" action="{{ url_for('update_order', order_id=o['id']) }}">
+                <select name="status">
+                    <option value="Pending" {% if o['status'] == "Pending" %}selected{% endif %}>Pending</option>
+                    <option value="Preparing" {% if o['status'] == "Preparing" %}selected{% endif %}>Preparing</option>
+                    <option value="Served" {% if o['status'] == "Served" %}selected{% endif %}>Served</option>
+                    <option value="Completed" {% if o['status'] == "Completed" %}selected{% endif %}>Completed</option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+        </td>
+        <td>
+            <a href="{{ url_for('delete_order', order_id=o['id']) }}" onclick="return confirmDelete('order')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

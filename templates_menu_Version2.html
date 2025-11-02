@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Menu Management</h2>
+<form method="post" action="{{ url_for('add_menu_item') }}">
+    <input type="text" name="name" placeholder="Item name" required>
+    <input type="number" step="0.01" name="price" placeholder="Price" required>
+    <button type="submit">Add Item</button>
+</form>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>{{ item['name'] }}</td>
+        <td>${{ "%.2f"|format(item['price']) }}</td>
+        <td>
+            <a href="{{ url_for('delete_menu_item', item_id=item['id']) }}" onclick="return confirmDelete('menu item')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

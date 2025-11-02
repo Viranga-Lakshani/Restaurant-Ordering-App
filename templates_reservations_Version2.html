@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Table Reservations</h2>
+<form method="post" action="{{ url_for('add_reservation') }}">
+    <input type="text" name="name" placeholder="Customer name" required>
+    <input type="number" name="table_no" placeholder="Table No" required>
+    <input type="datetime-local" name="time" required>
+    <button type="submit">Add Reservation</button>
+</form>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Table No</th>
+        <th>Time</th>
+        <th>Action</th>
+    </tr>
+    {% for r in reservations %}
+    <tr>
+        <td>{{ r['name'] }}</td>
+        <td>{{ r['table_no'] }}</td>
+        <td>{{ r['time'] }}</td>
+        <td>
+            <a href="{{ url_for('delete_reservation', res_id=r['id']) }}" onclick="return confirmDelete('reservation')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

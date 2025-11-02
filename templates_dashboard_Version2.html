@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome to the Restaurant Management System!</p>
+<ul>
+    <li>Total Menu Items: <b>{{ menu_count }}</b></li>
+    <li>Total Reservations: <b>{{ reservation_count }}</b></li>
+    <li>Total Orders: <b>{{ order_count }}</b></li>
+</ul>
+{% endblock %}
